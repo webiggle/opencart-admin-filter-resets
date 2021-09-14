@@ -7,35 +7,27 @@
     <link>https://store.webiggle.com/</link>
     
     <!-- Add Button -->
-    <file path="admin/view/template/{catalog,sale,customer,marketing}/{product_list,order_list,return_list,recurring_list,customer_list,marketing_list}.tpl">
+    <file path="admin/view/template/{catalog,sale,customer,marketing}/{product_list,order_list,return_list,recurring_list,customer_list,marketing_list}.twig">
         <operation error="skip">
-            <search><![CDATA[<button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-filter"></i> <?php echo $button_filter; ?></button>]]></search>
-            <add position="before"><![CDATA[<button type="button" id="button-reset" class="btn btn-default pull-right" style="margin-left: 10px;"><i class="fa fa-undo" aria-hidden="true"></i> <?php echo $button_reset; ?></button>]]></add>
+            <search><![CDATA[<button type="button" id="button-filter" class="btn btn-default"><i class="fa fa-filter"></i> {{ button_filter }}</button>]]></search>
+            <add position="after"><![CDATA[<button type="button" id="button-reset" class="btn btn-danger"><i class="fa fa-undo"></i> {{ button_reset }}</button>]]></add>
         </operation>
     </file>
 
     <!-- Add Button logic -->
-    <file path="admin/view/template/common/footer.tpl">
+    <file path="admin/view/template/common/footer.twig">
         <operation error="skip">
             <search><![CDATA[<footer id="footer">]]></search>
             <add position="before"><![CDATA[
             <script type="text/javascript"><!--
                 $('#button-reset').on('click', function() {
-                    $(this).closest('.well').find("input").val("");
-                    $(this).closest('.well').find("select").each(function(index, element) {
+                    $(this).closest('[id^=filter]').find("input").val("");
+                    $(this).closest('[id^=filter]').find("select").each(function(index, element) {
                         $(element).find('option:eq(0)').prop('selected', true);
                     });
                 });
             //--></script>
             ]]></add>
-        </operation>
-    </file>
-
-    <!-- Add Button Lang -->
-    <file path="admin/controller/{catalog,sale,customer,marketing}/{product,order,return,recurring,customer,marketing}.php">
-        <operation error="skip">
-            <search><![CDATA[$data['button_filter'] = $this->language->get('button_filter');]]></search>
-            <add position="after"><![CDATA[$data['button_reset'] = $this->language->get('button_reset');]]></add>
         </operation>
     </file>
 </modification>
